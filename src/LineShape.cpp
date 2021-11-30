@@ -9,6 +9,6 @@ namespace Netlist
 
     }
     Box BoxShape :: getBoundingBox () const{
-        return box_ ;
+        return Box(x1_,y1_,x2_,y2_) ;
     }
 }

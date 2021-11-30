@@ -3,10 +3,11 @@
 #ifndef NETLIST_INSTANCE_H
 #define NETLIST_INSTANCE_H
 
-#include <string>
 #include <vector>
+#include "XmlUtil.h"
+#include "Node.h"
 #include "Cell.h"
-#include "Point.h"
+#include "Term.h"
 
 namespace Netlist {
     class Instance{

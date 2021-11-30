@@ -2,14 +2,10 @@
 
 #ifndef NETLIST_TERM_H
 #define NETLIST_TERM_H
-#include  <libxml/xmlreader.h>
 #include <string>
-#include <vector>
-#include "Cell.h"
-#include "Point.h"
 #include "Node.h"
+#include "Cell.h"
 #include "Instance.h"
-#include "XmlUtil.h"
 
 namespace Netlist {
 class Net;

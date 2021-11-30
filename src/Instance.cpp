@@ -1,7 +1,7 @@
 // -*- explicit-buffer-name: "Instance.cpp<M1-MOBJ/4-5>" -*-
 
 #include "Instance.h"
-#include "Term.h"
+#include "Shape.h"
 
 namespace Netlist {
     using namespace std;

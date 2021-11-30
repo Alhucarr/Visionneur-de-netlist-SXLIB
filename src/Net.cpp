@@ -1,6 +1,4 @@
 // -*- explicit-buffer-name: "Net.cpp<M1-MOBJ/4-5>" -*-
-
-#include "Term.h"
 #include "Net.h"
 
 
