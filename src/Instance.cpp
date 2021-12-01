@@ -58,12 +58,23 @@ namespace Netlist {
                 }
             }   
     
-            void Instance::setPosition(const Point& p) {
-                position_ = Point(p);
+            void Instance::setPosition(const Point& p)
+            {
+                position_ = p;
+                std::vector<Shape*> s = getMasterCell()->getSymbol()->getShapes();
+                for(size_t i = 0; i < s.size(); ++i)
+                {
+                    TermShape* ts = dynamic_cast<TermShape*>(s[i]);
+                    if(ts != NULL)
+                    {
+    	                Term* t = getTerm(ts->getTerm()->getName());
+	                    t->setPosition(getPosition().translate(ts->getX(), ts->getY()));
+                    }	
+                }    
             }
-
-            void Instance::setPosition(int x, int y) {
-                position_ = Point(x, y);
+            void Instance::setPosition(int x, int y)
+            {
+                setPosition(Point(x,y));
             }
             void Instance::toXml(std::ostream& o) {
                 o << ++indent << "<instance name = \"" << getName() << "\" mastercell=\"" << masterCell_->getName() << "\" x=\"" << position_.Point::getX() << "\" y=\"" << position_.Point::getY() << "\"/>" << --indent << std::endl;

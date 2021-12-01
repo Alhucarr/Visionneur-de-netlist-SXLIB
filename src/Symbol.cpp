@@ -52,4 +52,52 @@ namespace Netlist
       }
     }
   }
+  void Symbol::toXml (std::ostream& os) const
+  {
+    os << indent << "<symbol>\n";
+    for(size_t i = 0; i < shapes_.size(); ++i)
+    {
+      shapes_[i]->toXml(os);
+    }
+    os << indent << "</symbol>\n";
+  }
+  Symbol* Symbol::fromXml (Cell* c, xmlTextReaderPtr reader)
+  {
+    Symbol* s = c->getSymbol();
+    if(s == NULL)
+      return NULL;
+
+    const xmlChar* SymbolTag = xmlTextReaderConstString( reader, (const xmlChar*)"symbol" );
+    
+    while(1)
+    {
+      int status = xmlTextReaderRead(reader);
+      if (status != 1) {
+	if (status != 0) {
+	  std::cerr << "[ERROR] Symbol::fromXml(): Unexpected termination of the XML parser." << std::endl;
+	}
+	break;
+      }
+      
+      switch ( xmlTextReaderNodeType(reader) ) {
+      case XML_READER_TYPE_COMMENT:
+      case XML_READER_TYPE_WHITESPACE:
+      case XML_READER_TYPE_SIGNIFICANT_WHITESPACE:
+	continue;
+      }
+      
+      const xmlChar* nodeName = xmlTextReaderConstLocalName( reader );
+      if((nodeName == SymbolTag) && (xmlTextReaderNodeType(reader) == XML_READER_TYPE_END_ELEMENT))
+	break;
+      else
+	if(Shape::fromXml(s, reader))
+	  continue;
+
+      std::cerr << "[ERROR] Symbol::fromXml(): Unknown or misplaced tag <" << nodeName
+		<< "> (line: " << xmlTextReaderGetParserLineNumber(reader) << ")." << std::endl;
+      break;
+    }
+        
+    return s;
+  }
 }

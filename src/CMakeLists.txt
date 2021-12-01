@@ -30,7 +30,7 @@
                                       Box.h
                                       Cell.h
                                       XmlUtil.h
-                                      shape.h
+                                      Shape.h
                        )
 
                     set( cpps         Indentation.cpp
