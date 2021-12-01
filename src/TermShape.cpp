@@ -5,6 +5,9 @@ namespace Netlist
 TermShape :: TermShape ( Symbol * owner , std::string name , int x1 , int y1, NameAlign na ): Shape ( owner ) , term_ ( NULL ), x1_ ( x1 ), y1_ ( y1 ),align_(na) {
     Cell * cell = getCell ();
     term_ = cell -> getTerm ( name );
+    
+    if(!term_)
+        std::cerr << "Cannot find terminal name " << name << " in cell " << cell ->getName() << std::endl;
 }
 
 TermShape ::~ TermShape () {

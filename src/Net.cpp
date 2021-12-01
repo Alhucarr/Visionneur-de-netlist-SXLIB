@@ -46,6 +46,7 @@ namespace Netlist {
                 if(id < nodes_.size())
                     nodes_[id] = n;
                 else 
+                    nodes_.resize(id+1);
                     nodes_.push_back(n);
             }
             void  Net::add ( Line* line ){

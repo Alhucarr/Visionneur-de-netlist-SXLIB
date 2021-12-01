@@ -16,6 +16,7 @@ namespace Netlist {
     Shape ( Symbol * );
     virtual ~Shape ();
     inline Symbol * getSymbol () const{ return owner_ ; };
+    inline Cell* getCell() const{return owner_->getCell();};
     virtual Box getBoundingBox () const = 0;
     virtual void  toXml   (std::ostream&) const =0;
     static Shape* fromXml (Symbol*, xmlTextReaderPtr);
@@ -64,7 +65,6 @@ public :
   static NameAlign Strtoalign(std::string str);
 
   inline Term * getTerm () const{return term_;};
-  inline Cell*  getCell () const{return term_->getCell();}
   inline int getX () const{return x1_;};
   inline int getY () const{return y1_;}
 };
@@ -86,6 +86,9 @@ class EllipseShape : public Shape
 
   class ArcShape : public Shape
   {    
+  private:
+    int start_, span_;
+    Box box_;
   public:
     ArcShape (Symbol*, int start_, int span_, const Box&);
     ArcShape (Symbol*, int start_, int span_, int x1, int y1, int x2, int y2);
@@ -96,10 +99,7 @@ class EllipseShape : public Shape
     inline int getSpan()const;
     void  toXml   (std::ostream&) const;
     static ArcShape* fromXml (Symbol* owner, xmlTextReaderPtr reader);
-    
-  private:
-    Box box_;
-    int start_, span_;
+
   };
 
   inline int ArcShape::getStart()const{return start_;}

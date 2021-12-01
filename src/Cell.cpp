@@ -44,7 +44,7 @@ namespace Netlist {
 
     Cell* cell = Cell::fromXml( reader );
     xmlFreeTextReader( reader );
-
+    cerr << cell->getName() << endl;
     return cell;
   }
 
@@ -287,6 +287,7 @@ namespace Netlist {
           }
           break;
         case BeginTerms:
+
           if ( (nodeName == termsTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT) ) {
             state = EndTerms;
             continue;
@@ -315,6 +316,7 @@ namespace Netlist {
           }
           break;
         case BeginNets:
+
           if ( (nodeName == netsTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT) ) {
             state = EndNets;
             continue;
@@ -330,6 +332,7 @@ namespace Netlist {
           break;
         case BeginSymbol:  // TME7
           if ( (nodeName == symbolTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT) ) {
+            
             if (Symbol::fromXml(cell,reader)) {
               state = EndCell;
               continue;
@@ -337,6 +340,7 @@ namespace Netlist {
           }
           break;
         case EndCell:
+
           if ( (nodeName == cellTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_END_ELEMENT) ) {
             continue;
           }
@@ -344,7 +348,6 @@ namespace Netlist {
         default:
           break;
       }
-
       cerr << "[ERROR] Cell::fromXml(): Unknown or misplaced tag <" << nodeName
            << "> (line:" << xmlTextReaderGetParserLineNumber(reader) << ")." << endl;
       break;
