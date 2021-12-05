@@ -138,13 +138,13 @@ int main ( int argc, char* argv[] ){
 
   return 0;
 }
-*/
 
-/*
+
+
 ----------------------------------------------
                     TME 7
 ----------------------------------------------
-*/
+
 
 // -*- explicit-buffer-name: "Main.cpp<M1-MOBJ/7>" -*-
 
@@ -180,4 +180,24 @@ int main ( int argc, char* argv[] )
   halfadder->toXml( cout );
 
   return 0;
+}
+
+
+
+----------------------------------------------
+                    TME 8
+----------------------------------------------
+*/
+
+# include < QApplication >
+# include < QtGui >
+# include " CellViewer .h "
+int main ( int argc , char * argv []) {
+  QApplication * qa = new QApplication ( argc , argv );
+  CellViewer * viewer = new CellViewer ();
+  viewer -> setCell ( halfadder );
+  viewer -> show ();
+  int rvalue = qa -> exec ();
+  delete qa ;
+  return rvalue ;
 }

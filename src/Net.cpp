@@ -8,7 +8,7 @@ namespace Netlist {
                 owner_->add(this);
             }
             Net::~Net     (){
-                for(int i = 0; i < nodes_.size(); ++i){
+                for(unsigned int i = 0; i < nodes_.size(); ++i){
                     NodeTerm* nt = dynamic_cast<NodeTerm*>(nodes_[i]);
                     nt->getTerm()->setNet(NULL);
                 }
@@ -45,9 +45,10 @@ namespace Netlist {
                 n->setId(id);
                 if(id < nodes_.size())
                     nodes_[id] = n;
-                else 
+                else{ 
                     nodes_.resize(id+1);
                     nodes_.push_back(n);
+                }
             }
             void  Net::add ( Line* line ){
                 if (line) lines_.push_back( line ); 
