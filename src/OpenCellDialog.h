@@ -1,4 +1,10 @@
-# include < QDialog >
+#ifndef NETLIST_OPEN_CELL_DIALOG_H
+#define NETLIST_OPEN_CELL_DIALOG_H
+
+#include "CellWidget.h"
+
+namespace Netlist {
+using namespace std;
 class OpenCellDialog : 
 public QDialog {
     Q_OBJECT ;
@@ -10,3 +16,6 @@ public :
 protected :
     QLineEdit * lineEdit_ ;
 };
+}
+
+#endif

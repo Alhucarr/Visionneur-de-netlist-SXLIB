@@ -31,8 +31,10 @@ namespace Netlist {
   inline  int    Point::getY      () const { return y_; }
   inline  Point& Point::setX      ( int x )  { x_ = x; return *this; }
   inline  Point& Point::setY      ( int y )  { y_ = y; return *this; }
-  inline  Point& Point::translate ( int dx, int dy ) { x_+=dx; y_+=dy; return *this; }
-  inline  Point& Point::translate ( const Point& p ) { return translate( p.getX(), p.getY() ); }
+  inline  Point& Point::translate ( int dx, int dy ) { 
+                        std::cerr << "POINT IN" << std::endl; x_+=dx; y_+=dy; return *this; }
+  inline  Point& Point::translate ( const Point& p ) { 
+                        std::cerr << "POINT IN" << std::endl; return translate( p.getX(), p.getY() ); }
 
   inline  std::ostream& operator<< ( std::ostream& stream, const Point& p )
   { stream << "<Point " << p.getX() << " " << p.getY() << ">"; return stream; }

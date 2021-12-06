@@ -189,12 +189,22 @@ int main ( int argc, char* argv[] )
 ----------------------------------------------
 */
 
-# include < QApplication >
-# include < QtGui >
-# include " CellViewer .h "
+# include <QApplication>
+# include <QtGui>
+# include "CellViewer.h"
+
+using namespace Netlist;
+
 int main ( int argc , char * argv []) {
+  Cell::load("gnd");
+  Cell::load("vdd");
+  Cell::load("TransistorP");
+  Cell::load("TransistorN");
+  Cell::load("xor2");
+  Cell::load("and2");
+  Cell* halfadder=Cell::load("halfadder");
   QApplication * qa = new QApplication ( argc , argv );
-  CellViewer * viewer = new CellViewer ();
+  CellViewer* viewer = new CellViewer ();
   viewer -> setCell ( halfadder );
   viewer -> show ();
   int rvalue = qa -> exec ();

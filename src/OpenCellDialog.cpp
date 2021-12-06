@@ -1,16 +1,17 @@
-# include < QLabel >
-# include < QLineEdit >
-# include < QPushButton >
-# include < QHBoxLayout >
-# include < QVBoxLayout >
-# include " OpenCellDIalog .h "
+# include <QLabel>
+# include <QLineEdit>
+# include <QPushButton>
+# include <QHBoxLayout>
+# include <QVBoxLayout>
+# include "OpenCellDialog.h"
 
-OpenCellDIalog :: OpenCellDIalog ( QWidget * parent ): QDialog ( parent ), lineEdit_ ( NULL ){
+namespace Netlist{
+OpenCellDialog :: OpenCellDialog ( QWidget * parent ): QDialog ( parent ), lineEdit_ ( NULL ){
     setWindowTitle ( tr ( " Open ␣ Cell ") );
     QLabel * label = new QLabel ();
-    label - > setText ( tr (" Enter ␣ Cell ␣ name ␣( without ␣ extention )") );
+    label -> setText ( tr (" Enter ␣ Cell ␣ name ␣( without ␣ extention )") );
     lineEdit_ = new QLineEdit ();
-    lineEdit_ - > setMinimumWidth ( 400 );
+    lineEdit_ -> setMinimumWidth ( 400 );
     QPushButton * okButton = new QPushButton ();
     okButton -> setText ( " OK " );
     okButton -> setDefault ( true );
@@ -23,8 +24,8 @@ OpenCellDIalog :: OpenCellDIalog ( QWidget * parent ): QDialog ( parent ), lineE
     hLayout -> addWidget ( cancelButton );
     hLayout -> addStretch ();
     QFrame * separator = new QFrame ();
-    separator - > setFrameShape ( QFrame :: HLine );
-    separator - > setFrameShadow ( QFrame :: Sunken );
+    separator -> setFrameShape ( QFrame :: HLine );
+    separator -> setFrameShadow ( QFrame :: Sunken );
     QVBoxLayout * vLayout = new QVBoxLayout ();
     vLayout -> setSizeConstraint ( QLayout :: SetFixedSize );
     vLayout -> addWidget ( label );
@@ -35,25 +36,19 @@ OpenCellDIalog :: OpenCellDIalog ( QWidget * parent ): QDialog ( parent ), lineE
     connect ( cancelButton , SIGNAL ( clicked ()) , this , SLOT ( reject ()) );
 }
 
-const QString OpenCellDIalog :: getCellName () const{ 
+const QString OpenCellDialog :: getCellName () const{ 
     return lineEdit_ -> text (); 
 }
 
-void OpenCellDIalog :: setCellName ( const QString & name ){
+void OpenCellDialog :: setCellName ( const QString & name ){
     return lineEdit_ -> setText ( name );
 }
 
-bool OpenCellDIalog :: run ( QString & name ){
-    Cell * cell = getCell ();
-    if ( cell == NULL )
-        return ;
-    QString cellName = cell -> getName (). c_str ();
-    if ( saveCellDialog_ -> run ( cellName )) {
-        cell - > setName ( cellName . toStdString () );
-        cell - > save ( cellName . toStdString () );
-    }
-    setCellName ( name );
-    int dialogResult = exec ();
-    name = getCellName ();
+bool OpenCellDialog :: run ( QString & name ){
+    OpenCellDialog opd;
+    opd.setCellName ( name );
+    int dialogResult = opd.exec ();
+    name = opd.getCellName ();
     return ( dialogResult == Accepted );
+}
 }

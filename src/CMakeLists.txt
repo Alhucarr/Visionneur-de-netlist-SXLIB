@@ -32,6 +32,7 @@ include(${QT_USE_FILE})
                       )
 
                    set( mocIncludes  SaveCellDialog.h
+                                     OpenCellDialog.h
                                      CellWidget.h
                                      CellViewer.h
                       )
@@ -45,10 +46,16 @@ include(${QT_USE_FILE})
                                      Instance.cpp
                                      Node.cpp
                                      Line.cpp
+                                     BoxShape.cpp
+                                     LineShape.cpp
+                                     TermShape.cpp
+                                     EllipseShape.cpp
+                                     ArcShape.cpp
                                      Shape.cpp
                                      Symbol.cpp
                                      Cell.cpp
                                      SaveCellDialog.cpp
+                                     OpenCellDialog.cpp
                                      CellWidget.cpp
                                      CellViewer.cpp
                                      Main.cpp

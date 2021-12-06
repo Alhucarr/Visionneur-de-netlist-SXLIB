@@ -34,14 +34,12 @@ namespace Netlist {
   {
     string           cellFile = "./cells/" + cellName + ".xml";
     xmlTextReaderPtr reader;
-
     cerr << "Loading <" << cellFile << ">" << endl;
     reader = xmlNewTextReaderFilename( cellFile.c_str() );
     if (reader == NULL) {
       cerr << "[ERROR] Cell::load() unable to open file <" << cellFile << ">." << endl;
       return NULL;
     }
-
     Cell* cell = Cell::fromXml( reader );
     xmlFreeTextReader( reader );
     cerr << cell->getName() << endl;
@@ -254,16 +252,15 @@ namespace Netlist {
 
     Cell* cell   = NULL;
     State state  = Init;
-
     while ( true ) {
+      cerr << "begin while" << endl;
       int status = xmlTextReaderRead(reader);
       if (status != 1) {
         if (status != 0) {
           cerr << "[ERROR] Cell::fromXml(): Unexpected termination of the XML parser." << endl;
         }
         break;
-      }
-
+      } 
       switch ( xmlTextReaderNodeType(reader) ) {
         case XML_READER_TYPE_COMMENT:
         case XML_READER_TYPE_WHITESPACE:
@@ -272,7 +269,7 @@ namespace Netlist {
       }
 
       const xmlChar* nodeName = xmlTextReaderConstLocalName( reader );
-
+      cerr << nodeName << endl;
       switch ( state ) {
         case Init:
           if (cellTag == nodeName) {
@@ -312,17 +309,19 @@ namespace Netlist {
             state = BeginNets;
             continue;
           } else {
-            if (Instance::fromXml(cell,reader)) continue;
+            cerr << "Flag in instance" << endl; 
+            if (Instance::fromXml(cell,reader)){ cerr << "Flag out instance" << endl; continue;}
           }
           break;
         case BeginNets:
-
+          cerr << "Flag in net" << endl;
           if ( (nodeName == netsTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT) ) {
             state = EndNets;
             continue;
           }
           break;
         case EndNets:
+          cerr << "Flag out net" << endl;
           if ( (nodeName == netsTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_END_ELEMENT) ) {
             state = BeginSymbol;  // TME7
             continue;
@@ -332,8 +331,9 @@ namespace Netlist {
           break;
         case BeginSymbol:  // TME7
           if ( (nodeName == symbolTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT) ) {
-            
+            cerr << "Flag in symbol" << endl;
             if (Symbol::fromXml(cell,reader)) {
+              cerr << "Flag out symbol" << endl;
               state = EndCell;
               continue;
             }
@@ -352,7 +352,7 @@ namespace Netlist {
            << "> (line:" << xmlTextReaderGetParserLineNumber(reader) << ")." << endl;
       break;
     }
-
+    cerr << "Flag" << endl; 
     return cell;
   }
 

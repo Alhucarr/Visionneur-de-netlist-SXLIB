@@ -50,7 +50,7 @@ namespace Netlist {
   inline size_t                    Node::getId       () const { return id_; }
   inline Point                     Node::getPosition () const { return position_; }
   inline void                      Node::setId       ( size_t id ) { id_=id; }
-  inline void                      Node::setPosition ( const Point& pos ) { position_ = pos; }
+  inline void                      Node::setPosition ( const Point& pos ) { std::cerr << "pos : " << pos << std::endl; position_ = pos;  }
   inline void                      Node::setPosition ( int x, int y )     { position_ = Point(x,y); }
 
 
