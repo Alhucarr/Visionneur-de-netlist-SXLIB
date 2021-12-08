@@ -32,7 +32,7 @@ namespace Netlist {
 
   Cell* Cell::load ( const string& cellName )
   {
-    string           cellFile = "./cells/" + cellName + ".xml";
+    string           cellFile = "../work/cells/" + cellName + ".xml";
     xmlTextReaderPtr reader;
     cerr << "Loading <" << cellFile << ">" << endl;
     reader = xmlNewTextReaderFilename( cellFile.c_str() );
@@ -269,7 +269,6 @@ namespace Netlist {
       }
 
       const xmlChar* nodeName = xmlTextReaderConstLocalName( reader );
-      cerr << nodeName << endl;
       switch ( state ) {
         case Init:
           if (cellTag == nodeName) {
@@ -309,19 +308,16 @@ namespace Netlist {
             state = BeginNets;
             continue;
           } else {
-            cerr << "Flag in instance" << endl; 
-            if (Instance::fromXml(cell,reader)){ cerr << "Flag out instance" << endl; continue;}
+            if (Instance::fromXml(cell,reader)){ continue;}
           }
           break;
         case BeginNets:
-          cerr << "Flag in net" << endl;
           if ( (nodeName == netsTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT) ) {
             state = EndNets;
             continue;
           }
           break;
         case EndNets:
-          cerr << "Flag out net" << endl;
           if ( (nodeName == netsTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_END_ELEMENT) ) {
             state = BeginSymbol;  // TME7
             continue;
@@ -331,9 +327,7 @@ namespace Netlist {
           break;
         case BeginSymbol:  // TME7
           if ( (nodeName == symbolTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT) ) {
-            cerr << "Flag in symbol" << endl;
             if (Symbol::fromXml(cell,reader)) {
-              cerr << "Flag out symbol" << endl;
               state = EndCell;
               continue;
             }
@@ -352,7 +346,6 @@ namespace Netlist {
            << "> (line:" << xmlTextReaderGetParserLineNumber(reader) << ")." << endl;
       break;
     }
-    cerr << "Flag" << endl; 
     return cell;
   }
 

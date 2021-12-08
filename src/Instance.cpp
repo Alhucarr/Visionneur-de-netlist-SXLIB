@@ -7,11 +7,9 @@ namespace Netlist {
     using namespace std;
             Instance::Instance      ( Cell* owner, Cell* model, const std::string& name):owner_(owner),masterCell_(model),name_(name){
                 owner_->add(this);
-                cerr << "Flag instance owner" << endl;
                 std::vector<Term*> Cterms_ = owner->getTerms();
                 for(unsigned int i = 0; i < Cterms_.size(); ++i){
                     new Term(this, Cterms_[i]);
-                    cerr << i << endl;
                 }
             }
             Instance::~Instance      (){
@@ -23,7 +21,6 @@ namespace Netlist {
                 return name_;
             }
             Cell* Instance::getMasterCell () const{
-                cerr << "bool : " << (masterCell_==NULL) << endl;
                 return masterCell_;
             }
             Cell* Instance::getCell() const{
@@ -65,19 +62,20 @@ namespace Netlist {
             {
                 position_ = p;
                 std::vector<Shape*> s = getMasterCell()->getSymbol()->getShapes();
-                cerr << "Flag size" << endl;
                 for(size_t i = 0; i < s.size(); ++i)
                 {
                     TermShape* ts = dynamic_cast<TermShape*>(s[i]);
                     if(ts != NULL)
                     {
-    	                cerr << "Flag a" << endl;
                         Term* t = getTerm(ts->getTerm()->getName());
-                        cerr << "Flag b" << endl;
-                        cerr << ts->getX() << endl;
-                        cerr << ts->getY() << endl;
+                        if(!t){
+                            for(Term* tmaster : getMasterCell()->getTerms())
+                                cerr << " term : {" << tmaster->getName() << "}" << endl;
+                            for(Term* tmaster : getTerms())
+                                cerr << " term instance: {" << tmaster->getName() << "}" << endl;
+                            cerr << "======================================================" << endl;
+                        }
 	                    t->setPosition(getPosition().translate(ts->getX(), ts->getY()));
-                        cerr << "Flag c" << endl;
                     }	
                 }    
             }
@@ -96,14 +94,10 @@ namespace Netlist {
                     string y_str =   xmlCharToString(xmlTextReaderGetAttribute(TxtR,(const xmlChar*) "y"));
 
                     if(name.empty() || mastercell.empty() || x_str.empty() || y_str.empty()) return NULL;
-                    cerr << "Flag in constructeur instance" << endl;
                     Instance* i = new Instance(cell,Cell::find(mastercell),name);
-                    cerr << "Flag out constructeur instance" << endl;
                     int x = atoi(x_str.c_str());
                     int y = atoi(y_str.c_str());
-                    cerr << "Flag in set" << endl;
                     i->setPosition(x,y);
-                    cerr << "Flag out set" << endl;
                     return i;
             }
 }

@@ -49,7 +49,7 @@ namespace Netlist {
                 }
             }
 
-            void  Term::setPosition  ( const Point& p){cerr << "Flag in node" << endl;node_.setPosition(p);cerr << "Flag out node" << endl;}
+            void  Term::setPosition  ( const Point& p){node_.setPosition(p);}
             void  Term::setPosition  ( int x, int y ){node_.setPosition(x,y);}
             
             std::string Term::toString(Term::Type t) { 

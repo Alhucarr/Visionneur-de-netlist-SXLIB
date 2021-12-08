@@ -26,7 +26,7 @@ namespace Netlist {
 
   Node::~Node ()
   {
-    while ( not lines_.empty() ) {
+    while ( !lines_.empty() ) {
       delete lines_[0];
     }
   }
@@ -129,22 +129,22 @@ namespace Netlist {
       }
 
       Term* term = NULL;
-      if (not instanceName.empty()) {
+      if (!instanceName.empty()) {
         Instance* instance = net->getCell()->getInstance( instanceName );
-        if (not instance) {
+        if (!instance) {
           cerr << "[ERROR] No Instance <" << instanceName << "> in Cell <" << net->getCell()->getName()
                << "> (line:" << xmlTextReaderGetParserLineNumber(reader) << ")." << endl;
           return false;
         }
         term = instance->getTerm( termName );
-        if (not term) {
+        if (!term) {
           cerr << "[ERROR] No Term <" << termName << "> in Instance <" << instanceName
                << "> (line:" << xmlTextReaderGetParserLineNumber(reader) << ")." << endl;
           return false;
         }
       } else {
         term = net->getCell()->getTerm( termName );
-        if (not term) {
+        if (!term) {
           cerr << "[ERROR] No Term <" << termName << "> in Cell <" << net->getCell()->getName()
                << "> (line:" << xmlTextReaderGetParserLineNumber(reader) << ")." << endl;
           return false;
