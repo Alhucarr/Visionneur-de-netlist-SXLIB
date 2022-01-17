@@ -25,7 +25,6 @@ namespace Netlist
     = xmlTextReaderConstString( reader, (const xmlChar*)"term" );
   const xmlChar* nodeName
       = xmlTextReaderConstLocalName( reader );
-
   Shape* shape = NULL;
   if (boxTag == nodeName)
     shape = BoxShape::fromXml( owner, reader );

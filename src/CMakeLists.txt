@@ -29,12 +29,18 @@ include(${QT_USE_FILE})
                                      Shape.h
                                      Symbol.h
                                      Cell.h
+                                     Error.h
                       )
 
                    set( mocIncludes  SaveCellDialog.h
                                      OpenCellDialog.h
                                      CellWidget.h
                                      CellViewer.h
+                                     CellsLib.h
+                                     CellsModel.h
+                                     InstancesModel.h
+                                     InstancesWidget.h
+
                       )
 
                    set( cpps         Indentation.cpp
@@ -58,6 +64,10 @@ include(${QT_USE_FILE})
                                      OpenCellDialog.cpp
                                      CellWidget.cpp
                                      CellViewer.cpp
+                                     InstancesModel.cpp
+                                     InstancesWidget.cpp
+                                     CellsLib.cpp
+                                     CellsModel.cpp
                                      Main.cpp
                       )
 

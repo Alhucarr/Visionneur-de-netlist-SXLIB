@@ -34,9 +34,14 @@ namespace Netlist {
 
   void  Node::attach ( Line* line )
   {
+    std::cout << "dans le attach "<< lines_.size() << std::endl;
     for ( size_t i=0 ; i<lines_.size() ; ++i ) {
-      if (lines_[i] == line) return;
+      if (lines_[i] == line){
+        std::cout << "Geronimooo !!!" << std::endl;
+        return;
+      }
     }
+    std::cout << "va push back" << std::endl;
     lines_.push_back( line );
   }
 

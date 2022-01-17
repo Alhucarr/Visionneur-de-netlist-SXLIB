@@ -30,7 +30,9 @@ namespace Netlist {
                 return nodes_;
             }
             Node* Net::getNode (size_t id) const{
-                return nodes_[id];
+                if(nodes_.size() > id)
+                    return nodes_[id];
+                return NULL;
             }
             size_t Net::getFreeNodeId () const{
                 unsigned int i;
@@ -41,13 +43,17 @@ namespace Netlist {
                 }return i;
             }
             void Net::add    ( Node* n){
-                unsigned int id = getFreeNodeId();
-                n->setId(id);
+                size_t id = n->getId();
+                if(id == Node::noid){
+                  id = getFreeNodeId();
+                  n->setId(id);
+                }
+    
                 if(id < nodes_.size())
-                    nodes_[id] = n;
-                else{ 
-                    nodes_.resize(id+1);
-                    nodes_.push_back(n);
+                  nodes_[id] = n;
+                else{
+                  nodes_.resize(id+1);
+                  nodes_[id] = n;
                 }
             }
             void  Net::add ( Line* line ){
@@ -87,6 +93,7 @@ namespace Netlist {
                 std::string name = xmlCharToString(     xmlTextReaderGetAttribute(   TxtR, (const xmlChar*) "name"     )     );
                 std::string type = xmlCharToString   (xmlTextReaderGetAttribute(  TxtR, (const xmlChar*) "type")     );
                 const xmlChar* nodeTag = xmlTextReaderConstString( TxtR, (const xmlChar*)"node" );
+                const xmlChar* lineTag = xmlTextReaderConstString( TxtR, (const xmlChar*)"line" );
 
                 if(name.empty() || type.empty())
                     return NULL;
@@ -113,6 +120,7 @@ namespace Netlist {
                         continue;
                     }
                     const xmlChar* nodeName = xmlTextReaderConstLocalName( TxtR );
+                    std::cout << "     Node name : " << nodeName << std::endl;
                     if(nodeName == nodeTag){
       	                if(xmlTextReaderNodeType(TxtR) == XML_READER_TYPE_ELEMENT){
       	                    if(!Node::fromXml(n, TxtR))
@@ -122,7 +130,19 @@ namespace Netlist {
 	                        break;
 	                    else
 	                        return NULL; 
+                        }else if(nodeName == lineTag){
+      	                if(xmlTextReaderNodeType(TxtR) == XML_READER_TYPE_ELEMENT){
+      	                    if(!Line::fromXml(n, TxtR))
+	                            return NULL;
+	                    }
+                        else if(xmlTextReaderNodeType(TxtR) == XML_READER_TYPE_END_ELEMENT)
+	                        break;
+	                    else
+	                        return NULL; 
+                        }else{
+                            break;
                         }
+                    
                 } return n;
             }
 }

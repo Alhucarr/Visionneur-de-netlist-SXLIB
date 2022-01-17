@@ -45,7 +45,6 @@ namespace Netlist {
       int idTarget = 0;
       xmlGetIntAttribute( reader, "source", idSource );
       xmlGetIntAttribute( reader, "target", idTarget );
-
       Node*      source = net->getNode( idSource );
       Node*      target = net->getNode( idTarget );
 
@@ -59,7 +58,6 @@ namespace Netlist {
              << xmlTextReaderGetParserLineNumber(reader) << ")." << endl;
         return false;
       }
-
       net->add( new Line(source,target) );
       return true;
     }

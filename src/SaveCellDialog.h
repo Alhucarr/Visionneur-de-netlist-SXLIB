@@ -1,7 +1,12 @@
 #ifndef NETLIST_SAVE_CELL_DIALOG_H
 #define NETLIST_SAVE_CELL_DIALOG_H
 
-#include "CellWidget.h"
+#include <QDialog>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 
 namespace Netlist {
 using namespace std;

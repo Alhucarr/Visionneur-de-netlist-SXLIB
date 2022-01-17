@@ -64,7 +64,7 @@ namespace Netlist {
 
 
   Cell::Cell ( const string& name )
-    : symbol_   (this)  // TME7
+    : symbol_   (this)
     , name_     (name) 
     , terms_    ()
     , instances_()
@@ -224,7 +224,7 @@ namespace Netlist {
     }
     stream << --indent << "</nets>\n";
 
-    symbol_.toXml( stream );  // TME7
+    symbol_.toXml( stream );
 
     stream << --indent << "</cell>\n";
   }
@@ -232,6 +232,7 @@ namespace Netlist {
 
   Cell* Cell::fromXml ( xmlTextReaderPtr reader )
   {
+    std::cout << "Debut fromXml" << std::endl;
     enum  State { Init           = 0
                 , BeginCell
                 , BeginTerms
@@ -253,7 +254,6 @@ namespace Netlist {
     Cell* cell   = NULL;
     State state  = Init;
     while ( true ) {
-      cerr << "begin while" << endl;
       int status = xmlTextReaderRead(reader);
       if (status != 1) {
         if (status != 0) {
@@ -269,6 +269,7 @@ namespace Netlist {
       }
 
       const xmlChar* nodeName = xmlTextReaderConstLocalName( reader );
+      std::cout << "Node name : " << nodeName << std::endl;
       switch ( state ) {
         case Init:
           if (cellTag == nodeName) {
@@ -326,6 +327,7 @@ namespace Netlist {
           }
           break;
         case BeginSymbol:  // TME7
+          std::cout << "Node name : " << nodeName << std::endl;
           if ( (nodeName == symbolTag) and (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT) ) {
             if (Symbol::fromXml(cell,reader)) {
               state = EndCell;

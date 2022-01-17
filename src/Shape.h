@@ -43,13 +43,16 @@ namespace Netlist {
     Box getBoundingBox () const;
     void  toXml   (std::ostream&) const;
     static LineShape* fromXml (Symbol* owner, xmlTextReaderPtr reader);
+    inline Point getPointdeb(){return Point(x1_,y1_);}
+    inline Point getPointfin(){return Point(x2_,y2_);}
   private:
     int x1_, y1_, x2_, y2_;
   };
 
 class TermShape : public Shape {
-private :
+public :
   enum NameAlign {TopLeft = 1, TopRight, BottomLeft, BottomRight,Unknown};
+private :
   Term * term_ ;
   int x1_ , y1_ ;
   NameAlign align_;
@@ -64,9 +67,10 @@ public :
   std::string Aligntostr(NameAlign na) const;
   static NameAlign Strtoalign(std::string str);
 
-  inline Term * getTerm () const{return term_;};
-  inline int getX () const{return x1_;};
+  inline Term * getTerm () const{return term_;}
+  inline int getX () const{return x1_;}
   inline int getY () const{return y1_;}
+  inline NameAlign getNameAlign(){return align_;}
 };
 
 class EllipseShape : public Shape

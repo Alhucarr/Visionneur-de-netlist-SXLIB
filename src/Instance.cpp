@@ -7,7 +7,11 @@ namespace Netlist {
     using namespace std;
             Instance::Instance      ( Cell* owner, Cell* model, const std::string& name):owner_(owner),masterCell_(model),name_(name){
                 owner_->add(this);
-                std::vector<Term*> Cterms_ = owner->getTerms();
+                if(!model){
+                        cerr << "Cannot find Model : Aborting..." << endl;
+                        exit(1);
+                }
+                std::vector<Term*> Cterms_ = model->getTerms();
                 for(unsigned int i = 0; i < Cterms_.size(); ++i){
                     new Term(this, Cterms_[i]);
                 }
@@ -30,11 +34,11 @@ namespace Netlist {
                 return terms_;
             }
             Term* Instance::getTerm       ( const std::string& name) const{
-                for(size_t i = 0; i < terms_.size(); ++i){
-					if(terms_[i]->getName() == name) return terms_[i];
-				}
-				return NULL;
-            }
+                for(unsigned int i = 0; i < terms_.size();i++){
+					        if(terms_[i]->getName() == name) return terms_[i];
+			          }
+			          return NULL;
+              }
             Point Instance::getPosition   () const{
                 return position_;
             }
@@ -52,7 +56,7 @@ namespace Netlist {
             }
     
             void Instance::remove(Term* t) {
-                for(size_t i = 0; i < terms_.size(); i++){
+                for(unsigned int i = 0; i < terms_.size(); i++){
                     if(terms_[i] == t)
                         terms_.erase(terms_.begin()+i);
                 }

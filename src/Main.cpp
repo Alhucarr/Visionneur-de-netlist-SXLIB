@@ -187,7 +187,7 @@ int main ( int argc, char* argv[] )
 ----------------------------------------------
                     TME 8
 ----------------------------------------------
-*/
+
 
 # include <QApplication>
 # include <QtGui>
@@ -210,4 +210,46 @@ int main ( int argc , char * argv []) {
   int rvalue = qa -> exec ();
   delete qa ;
   return rvalue ;
+}
+
+----------------------------------------------
+                    TME 9
+----------------------------------------------
+*/
+
+# include <QApplication>
+# include <QtGui>
+# include "CellViewer.h"
+#include "Error.h"
+
+using namespace Netlist;
+int main ( int argc , char * argv []) {
+  try {
+    Cell::load("gnd");
+    Cell::load("vdd");
+    Cell::load("TransistorP");
+    Cell::load("TransistorN");
+    Cell::load("xor2");
+    Cell::load("and2");
+    Cell * cell = Cell :: load ("halfadder" );
+    QApplication * qa = new QApplication ( argc , argv );
+    CellViewer* viewer = new CellViewer ();
+    viewer -> setCell ( cell );
+    viewer -> show ();
+    int rvalue = qa -> exec ();
+    delete qa ;
+    return rvalue ;
+  }
+  catch ( int & e ) {
+    cerr << " [ ERROR ] code :" << e << endl ;
+    exit (1);
+  }
+  catch ( Error& e ) {
+    cerr << " [ ERROR ] " << e.what () << endl ;
+    exit (1);
+  }
+  catch ( ... ) {
+    cerr << " [ ERROR ] Dans quel etat j’erre." << endl ;
+    exit (1);
+  }
 }

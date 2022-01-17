@@ -6,16 +6,16 @@
 # include "SaveCellDialog.h"
 namespace Netlist{
 SaveCellDialog :: SaveCellDialog ( QWidget * parent ): QDialog ( parent ), lineEdit_ ( NULL ){
-    setWindowTitle ( tr ( " Save ␣ Cell ") );
+    setWindowTitle ( tr ( "Save Cell") );
     QLabel * label = new QLabel ();
-    label -> setText ( tr (" Enter ␣ Cell ␣ name ␣( without ␣ extention )") );
+    label -> setText ( tr ("Enter Cell name(without extention)") );
     lineEdit_ = new QLineEdit ();
     lineEdit_ -> setMinimumWidth ( 400 );
     QPushButton * okButton = new QPushButton ();
-    okButton -> setText ( " OK " );
+    okButton -> setText ( "OK" );
     okButton -> setDefault ( true );
     QPushButton * cancelButton = new QPushButton ();
-    cancelButton -> setText ( " Cancel " );
+    cancelButton -> setText ( "Cancel" );
     QHBoxLayout * hLayout = new QHBoxLayout ();
     hLayout -> addStretch ();
     hLayout -> addWidget ( okButton );
