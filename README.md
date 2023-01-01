@@ -5,7 +5,7 @@
 ## Description
 Ce projet, encadré par Jean-Paul Chaput, entre dans le cadre de l'UE MOBJ à Sorbonne Université dans le Master SESI en première année.
 
-Ce projet est une netlist permettant d'afficher les portes logiques d'une bibliothèque nomrée SXLIB. 
+Ce projet est un visionneur de netlist permettant d'afficher les portes logiques d'une bibliothèque nomrée SXLIB. 
 
 Membres :
 - [Guanting QIN](https://github.com/GustavoQIN) 
